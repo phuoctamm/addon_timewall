@@ -1,0 +1,36 @@
+{
+  "name": "Timewall auto",
+  "version": "0.1.0",
+  "icons": {
+    "16": "img/icons/affcoder.png",
+    "48": "img/icons/affcoder.png",
+    "128": "img/icons/affcoder.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "img/icons/affcoder.png",
+      "48": "img/icons/affcoder.png"
+    },
+    "default_popup": "/popup/index.html"
+  },
+  "description": "a tool developed by affcoder.",
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "storage",
+    "cookies",
+    "tabs",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "background": {
+    "scripts": ["/js/background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["/js/external/jquery.js", "/js/utils.js", "/js/content_script.js"]
+    }
+  ],
+  "manifest_version": 2
+}
