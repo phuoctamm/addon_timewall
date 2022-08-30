@@ -73,8 +73,6 @@ const getItemsFromStorage = async function (key) {
   return new Promise((resolve, reject) => {
     try {
       chrome.storage.local.get(key, function (value) {
-        console.log(value, key, typeof key);
-
         resolve(typeof key === "string" ? value[key] : value);
       });
     } catch (ex) {
@@ -141,3 +139,23 @@ const decodeHtmlCharCodes = (str) =>
   str.replace(/(&#(\d+);)/g, (match, capture, charCode) =>
     String.fromCharCode(charCode)
   );
+
+function waitForElmDisplay(elm, countCheck = 0) {
+  return new Promise(async (resolve, reject) => {
+    if (countCheck > 60) {
+      // wait for 1 minutes
+      reject(new Error("Error"));
+      return true;
+    }
+
+    if ($(elm).length > 0) {
+      resolve();
+    } else {
+      await timeOut(1000);
+
+      waitForElmDisplay(elm, countCheck + 1)
+        .then(resolve)
+        .catch(reject);
+    }
+  });
+}
